@@ -31,7 +31,7 @@ class Ebizmarts_MailChimp_Model_Api_Customers
         $collection->getSelect()->limit(self::BATCH_LIMIT);
 
         $customerArray = array();
-        
+
         $batchId = Ebizmarts_MailChimp_Model_Config::IS_CUSTOMER . '_' . Mage::helper('mailchimp')->getDateMicrotime();
 
         $counter = 0;
@@ -279,7 +279,7 @@ class Ebizmarts_MailChimp_Model_Api_Customers
                 switch ($customAtt) {
                     case 'billing_company':
                     case 'shipping_company':
-                        $addr = explode('_', $attributeCode);
+                        $addr = explode('_', $customAtt);
                         $address = $customer->{'getPrimary' . ucfirst($addr[0]) . 'Address'}();
                         if (!$address) {
                             if ($customer->{'getDefault' . ucfirst($addr[0])}()) {
@@ -296,7 +296,7 @@ class Ebizmarts_MailChimp_Model_Api_Customers
                         break;
                     case 'billing_telephone':
                     case 'shipping_telephone':
-                        $addr = explode('_', $attributeCode);
+                        $addr = explode('_', $customAtt);
                         $address = $customer->{'getPrimary' . ucfirst($addr[0]) . 'Address'}();
                         if (!$address) {
                             if ($customer->{'getDefault' . ucfirst($addr[0])}()) {
@@ -313,7 +313,7 @@ class Ebizmarts_MailChimp_Model_Api_Customers
                         break;
                     case 'billing_country':
                     case 'shipping_country':
-                        $addr = explode('_', $attributeCode);
+                        $addr = explode('_', $customAtt);
                         $address = $customer->{'getPrimary' . ucfirst($addr[0]) . 'Address'}();
                         if (!$address) {
                             if ($customer->{'getDefault' . ucfirst($addr[0])}()) {
@@ -331,7 +331,7 @@ class Ebizmarts_MailChimp_Model_Api_Customers
                         break;
                     case 'billing_zipcode':
                     case 'shipping_zipcode':
-                        $addr = explode('_', $attributeCode);
+                        $addr = explode('_', $customAtt);
                         $address = $customer->{'getPrimary' . ucfirst($addr[0]) . 'Address'}();
                         if (!$address) {
                             if ($customer->{'getDefault' . ucfirst($addr[0])}()) {
@@ -353,7 +353,7 @@ class Ebizmarts_MailChimp_Model_Api_Customers
         return (!empty($mergeVars)) ? $mergeVars : null;
     }
 
-    public function createGuestCustomer($guestId, $order) 
+    public function createGuestCustomer($guestId, $order)
     {
         $guestCustomer = Mage::getModel('customer/customer')->setId($guestId);
         foreach ($order->getData() as $key => $value) {
@@ -366,7 +366,7 @@ class Ebizmarts_MailChimp_Model_Api_Customers
         return $guestCustomer;
     }
 
-    public function getOptin() 
+    public function getOptin()
     {
         if (Mage::helper('mailchimp')->getConfigValue(Ebizmarts_MailChimp_Model_Config::ECOMMERCE_CUSTOMERS_OPTIN, 0)) {
             $optin = true;
